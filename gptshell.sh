@@ -157,11 +157,14 @@ fi
 if $interactive_mode; then
     echo "进入对话模式。输入 '/exit' 退出，输入 '/clean' 清除上下文。"
     while true; do
-        read -p "你: " content
+        read -p "你: " content agrument
         if [[ "$content" == "/exit" ]]; then
             break
         elif [[ "$content" == "/messages" ]]; then
             echo $messages |jq .
+        elif [[ "$content" == "/model" ]]; then
+            model=$agrument
+            echo $model
         elif [[ "$content" == "/clean" ]]; then
             init_messages
             add_system_message "$system_prompt"
