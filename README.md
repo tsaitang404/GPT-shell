@@ -4,12 +4,15 @@
 给执行权限 chmod +x gptshell.sh
 用法: gptshell.sh [选项] <消息内容>
 选项:
-  -u,  --url <url>       指定请求的URL
+  -u,  --url <url>         指定请求的URL
   -s,  --secret <token>    指定 Token
-  -i,  --interactive_mode    进入交互模式
-  -d,  --debug         打印调试信息
-  -dd, --debug-more       打印更多调试信息
-  -h,  --help          打印此帮助信息
+  -m,  --model             指定模型
+  -t,  --test              显示请求总时间
+  -p,  --system-prompt     改变系统提示
+  -i,  --interactive_mode  进入交互模式
+  -d,  --debug             打印调试信息
+  -dd, --debug-more        打印更多调试信息
+  -h,  --help              打印此帮助信息
 ```
 ## Todo
 - ~~`-m|--model`选择模型~~
