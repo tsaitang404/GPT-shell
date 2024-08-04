@@ -169,6 +169,8 @@ if $interactive_mode; then
             init_messages
             add_system_message "$system_prompt"
             echo "上下文已清除。"
+        elif [[ "$content" == "/help" ]]; then
+            print_usage
         else
             # 将用户输入添加到消息历史中
             add_user_message "$content"

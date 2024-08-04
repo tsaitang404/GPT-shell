@@ -17,7 +17,7 @@
 - `-p|--system-prompt`改变系统提示
 - `/system_prompt`shell内改变系统propt
 - shell内改变url和token
-- shell内帮助`/help`
+- ~~shell内帮助`/help`~~
 - `-t|--testuel` url测速
 - 携带历史消息数量
 - 历史消息压缩
