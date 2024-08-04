@@ -15,8 +15,8 @@
 - ~~`-m|--model`选择模型~~
 - ~~shell内改变模型`/model`~~
 - ~~`-p|--system-prompt`改变系统提示~~
-- `/system_prompt`shell内改变系统prompt
-- shell内改变url和token
+- `~~/system_prompt`shell内改变系统prompt~~
+- ~~shell内改变url和token~~
 - ~~shell内帮助`/help`~~
 - ~~`-t|--testuel` url测速~~
 - 携带历史消息数量

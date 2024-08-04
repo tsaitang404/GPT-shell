@@ -177,12 +177,33 @@ if $interactive_mode; then
         elif [[ "$content" == "/model" ]]; then
             model=$agrument
             echo $model
+        elif [[ "$content" == "/url" ]]; then
+            url="$agrument/v1/chat/completions"
+            echo $url
+        elif [[ "$content" == "/token" ]]; then
+            token=$agrument
+            echo $token
+        elif [[ "$content" == "/test" ]]; then
+            if [ "$test" =true ]; then
+                test=false
+            else
+                test=true
+            fi
         elif [[ "$content" == "/clean" ]]; then
             init_messages
             add_system_message "$system_prompt"
             echo "上下文已清除。"
         elif [[ "$content" == "/help" ]]; then
-            print_usage
+            echo "指令格式： /<commend> <agrument>"
+            oneline
+            echo "/messages 打印历史消息"
+            echo "/model <model name>   切换模型"
+            echo "/url <base url>   改变url"
+            echo "/token <token>    改变token"
+            echo "/test     是/否打印耗时"
+            echo "/clean    清除历史信息"
+            echo "/exit     退出"
+            oneline
         else
             # 将用户输入添加到消息历史中
             add_user_message "$content"
