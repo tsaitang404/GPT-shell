@@ -5,6 +5,7 @@ debug=0 # 调试等级
 interactive_mode=false # 是否可交互
 system_prompt="如果没有特别说明，请使用中文回答。" # 系统提示词
 model="gpt-3.5-turbo"  # 默认模型
+test=false
 
 # 打印使用说明
 print_usage() {
@@ -14,7 +15,9 @@ print_usage() {
     echo "  -u,  --url <url>       指定请求的URL"
     echo "  -s,  --secret <token>    指定 Token"
     echo "  -m,  --model <model-name>  指定 Model"
-    echo "  -i,  --interactive_mode    进入交互模式"
+    echo "  -p,  --system-prompt <System Prompt> 指定系统提示"
+    echo "  -t,  --test          测试延迟"
+    echo "  -i,  --interactive -w "连接时间: %{time_connect}, 接收响应时间: %{time_starttransfer}\n"_mode    进入交互模式"
     echo "  -d,  --debug         打印调试信息"
     echo "  -dd, --debug-more       打印更多调试信息"
     echo "  -h,  --help          打印此帮助信息"
@@ -26,10 +29,12 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -u|--url) url="$2/v1/chat/completions"; shift ;;
         -s|--secret) secret=$2; shift ;;
+        -m|--module)    model=$2; shift ;;
+        -p|--system-prompt) system_prompt=$2; shift ;;
+        -t|--test)      test=true;;
+        -i|--interactive) interactive_mode=true ;;  # 设置进入交互模式
         -d|--debug) debug=1 ;;
         -dd|--debug-more) debug=2 ;;
-        -i|--interactive) interactive_mode=true ;;  # 设置进入交互模式
-        -m|--module)    model=$2; shift ;;
         -h|--help) print_usage; exit 0 ;;
         *) content=$1 ;;  # 其余参数视为content
     esac
@@ -46,12 +51,15 @@ oneline(){
 # 发送请求函数
 send_request() {
     local messages=$1
+    start_time=$(date +%s%N)  # 记录开始时间，精确到纳秒
     # 使用curl发送POST请求并获取响应
     response=$(curl -s  --request POST \
         --url "$url" \
         --header "Authorization: Bearer $secret" \
         --header 'content-type: application/json; charset=utf-8' \
         --data "$messages"| awk '{gsub(/\0/,"")}1')
+    
+    end_time=$(date +%s%N)  # 记录结束时间
 
     if [ "$(echo "$response" | jq 'has("error")')" = "true" ]; then
 
@@ -74,6 +82,10 @@ send_request() {
         *) echo "$response" | jq -r '.choices[0].message.content'  ;;  # 只输出内容，使用 -r 选项以避免引号
 
     esac
+    if [ $test == true ];then
+        duration=$(( (end_time - start_time) / 1000000 ))  # 将纳秒转换为毫秒
+        echo "请求耗时: $duration ms"
+    fi
 }
 
 # 添加用户消息
