@@ -1,5 +1,7 @@
 原本是写来测试OpenAI接口的，加了交互功能，可以用shell简单的与ghatGPT对话。
+
 url请输入完整，openai需要带有v1/chat/completions
+
 cloudflare llama完整地址形如https://api.cloudflare.com/client/v4/accounts/<token>/ai/run/@cf/meta/llama-3-8b-instruct
 ## Help
 ```
